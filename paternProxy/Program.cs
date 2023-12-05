@@ -3,7 +3,7 @@ using paternProxy;
 
 using UserContext db = new UserContext();
 
-if(!db.Users.Any())
+if(db.Users.Count() == 0)
 {
     List<UserInfo> data = new()
     {
@@ -25,11 +25,12 @@ if(!db.Users.Any())
         new UserInfo(16, "Name: Владимир Сергеев, Age: 36")
     };
     db.Users.AddRange(data);
+    db.SaveChanges();
 }
 var user = new ProxyUser(10,db);
 
 var stopwatch = new Stopwatch();
-
+Console.WriteLine(db.Users.Count());
 stopwatch.Start();
 Console.WriteLine(user.GetInfo());
 stopwatch.Stop();
